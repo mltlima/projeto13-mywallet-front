@@ -30,12 +30,12 @@ export default function Output() {
     return(
         <MainDiv>
             <Header>
-                <p>Nova entrada</p>
+                <p>Nova saída</p>
             </Header>
             <InputForm onSubmit={handleInput}>
-                <input type="number" placeholder="Valor" onChange={(e) => setInput({...input, value: e.target.value})} required/>
+                <input type="number" step="0.01" placeholder="Valor" onChange={(e) => setInput({...input, value: e.target.value})} required/>
                 <input type="text" placeholder="Descrição" onChange={(e) => setInput({...input, description: e.target.value})} required/>
-                <button type="submit"><p>Salvar entrada</p></button>
+                <button type="submit"><p>Salvar saída</p></button>
             </InputForm>
         </MainDiv>
     )

@@ -33,7 +33,7 @@ export default function Input() {
                 <p>Nova entrada</p>
             </Header>
             <InputForm onSubmit={handleInput}>
-                <input type="number" placeholder="Valor" onChange={(e) => setInput({...input, value: e.target.value})} required/>
+                <input type="number" step="0.01" placeholder="Valor" onChange={(e) => setInput({...input, value: e.target.value})} required/>
                 <input type="text" placeholder="Descrição" onChange={(e) => setInput({...input, description: e.target.value})} required/>
                 <button type="submit"><p>Salvar entrada</p></button>
             </InputForm>

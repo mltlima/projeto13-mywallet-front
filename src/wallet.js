@@ -42,6 +42,10 @@ export default function Wallet() {
                 {!wallet.ledger[0] ? <p>Não há registros de entrada ou saída</p> :
                     wallet.ledger.map((item, index) => <Ledger key={index} item={item}/>)}
             </WalletInfo>
+            <BalanceDiv value={wallet.value}>
+                <h4>SALDO</h4>
+                <p>{parseFloat(wallet.value).toFixed(2)}</p>
+            </BalanceDiv>
             <InpOut>
                 <Button onClick={() => navigate("/input")}>
                     <ion-icon name="add-circle-outline"></ion-icon>
@@ -110,6 +114,26 @@ const ValueDiv = styled.div`
     }
 `
 
+const BalanceDiv = styled.div`
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 10px;
+    border-radius: 0px 0px 5px 5px;
+
+    h4{
+        font-weight: 700;
+    }
+
+    p {
+        color: ${({ value }) => (parseFloat(value) > 0 ? '#03AC00' : '#C70000')};
+    }
+    font-size: 17px;
+        
+`
+
 const Header = styled.div`
     width: 80%;
     display: flex;
@@ -127,7 +151,7 @@ const WalletInfo = styled.div`
     height: 60%;
     display: flex;
     flex-direction: column;
-    border-radius: 5px;
+    border-radius: 5px 5px 0px 0px;
     background-color: #ffffff;
     font-size: 20px;
     text-align: center;
