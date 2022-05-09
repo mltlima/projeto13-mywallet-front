@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:5000/';
+const URL = 'https://projeto-mywallet.herokuapp.com/';
 
 function config(token){
     return { headers: { authorization : `Bearer ${token}` }}
