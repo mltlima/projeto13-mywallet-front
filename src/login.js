@@ -1,28 +1,47 @@
 import styled from "styled-components";
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
 
 import UserContext from "./userContext";
+import api from "./api"
 
 export { LoginContainer, InputForm }
 
 export default function Login() {
+    const navigate = useNavigate();
+    const { user, setUser } = useContext(UserContext);
     const [userData, setUserData] = useState({
-        email: '',
         password: '',
+        email: ''
     });
     const [loading, setLoading] = useState(false);
+
+    //Recover token in local storage
+    useEffect(() => {
+        if (window.localStorage.getItem("user") !== null) {
+            setUser(JSON.parse(window.localStorage.getItem("user")));
+            navigate("/wallet")
+        }
+    }, [])
 
     //submit form to api
     function submitLogin(event){
         event.preventDefault();
-
-        const promise = axios.post("localhost:5000/api/login", (userData));
-        promise.then(response => {
-
-        }).catch(error => {
-
+        
+        api.login(userData).then((response) => {
+            const { token, user } = response.data;
+            //save token in local storage
+            const toLocalStorage = {
+                token,
+                email: user.email,
+                username: user.username
+            }
+            localStorage.setItem('user', JSON.stringify(toLocalStorage));
+            setUser(toLocalStorage);
+            navigate("/wallet");
+        }).catch((error) => {
+            console.log(error);
+            alert("Usuário ou senha incorretos");
         })
     }
 
@@ -34,7 +53,8 @@ export default function Login() {
                 <input type="password" placeholder="Senha" onChange={(e) => setUserData({...userData, password: e.target.value})} disabled={loading} required/>
                 <button type="submit"><p>Entrar</p></button>
             </InputForm>
-            <Link to="/signUp"><h2>Primeira vez? Cadastre-se!</h2></Link>
+            <h2 onClick={() => navigate("/signUp")}>Primeira vez? Cadastre-se!</h2>
+            
         </LoginContainer>
     )
 }
